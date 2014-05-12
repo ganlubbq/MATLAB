@@ -1,7 +1,7 @@
 function y=zero2negone(x)
 y=[];
 Tb=0.01;
-Ts=0.001;
+Ts=0.0001;
 b=Tb/Ts;
 for i=1:length(x)
     if x(i)==0
@@ -15,4 +15,5 @@ for i=1:length(x)
         end
         y=[y,z];
     end
+end
 end
