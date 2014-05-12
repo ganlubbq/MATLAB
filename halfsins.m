@@ -10,8 +10,6 @@ te=-Tb:Ts:((length(a)-1-c)*Ts);
 to=-Tb:Ts:((length(b)-1-c)*Ts);
 even=a.*cos(pi*te/(2*Tb)); 
 odd=b.*sin(pi*to/(2*Tb));
-length(te)
-length(to)
 figure (1)
 subplot(2,1,1), plot(to,odd), grid on
 subplot(2,1,2), plot(to,b), grid on
