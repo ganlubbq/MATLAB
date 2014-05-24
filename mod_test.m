@@ -4,8 +4,8 @@ Ts=0.0001;
 c=Tb/Ts;
 
 
-x=bitstr(20)
-y=zero2negone(x);
+stream=bitstr(10)
+y=zero2negone(stream);
 [a,b]=demux(y);
 
 [z,x]=halfsins(a,b);
