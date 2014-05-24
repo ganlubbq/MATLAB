@@ -22,7 +22,7 @@ function varargout = GUI_1(varargin)
 
 % Edit the above text to modify the response to help GUI_1
 
-% Last Modified by GUIDE v2.5 21-May-2014 11:01:44
+% Last Modified by GUIDE v2.5 24-May-2014 15:35:24
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -52,9 +52,14 @@ hObject =  stem(zero2negone(bitstr(10)))
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to GUI_1 (see VARARGIN)
+%axes(handles.axes1);
 x1 = [-3*pi : 0.01 : 3*pi];
 handles.awgn = addnoise(x1);
 handles.noawgn = x1;
+
+handles.randbitstr = 0;
+handles.modulated = 0;
+handles.demodulated = 0;
 % Choose default command line output for GUI_1
 handles.output = hObject;
 
@@ -76,14 +81,17 @@ function varargout = GUI_1_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
+% --- Executes on button press in button_modulate.
+function button_modulate_Callback(hObject, eventdata, handles)
+% hObject    handle to button_modulate (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %y = mskmod(x,8,[],pi/2);
 %plot(y,16);
-plot (sin(handles.current_data));
+handles.modulated = mod_test(handles.randbitstr);
+plot (handles.axes4,handles.modulated);
+guidata(hObject,handles);
+
 
 % --- Executes on button press in checkbox1.
 function checkbox1_Callback(hObject, eventdata, handles)
@@ -92,13 +100,64 @@ function checkbox1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 if (get(hObject,'Value') == get(hObject,'Max'))
 	display('Selected');
-    handles.current_data = handles.awgn;
+    handles.modulated = addnoise(handles.modulated);
     
 else
 	display('Not selected');
-    handles.current_data = handles.noawgn;
+    handles.modulated = handles.modulated;
     
 end
 guidata(hObject,handles)
 
 % Hint: get(hObject,'Value') returns toggle state of checkbox1
+
+
+% --- Executes on button press in button_demodulate.
+function button_demodulate_Callback(hObject, eventdata, handles)
+% hObject    handle to button_demodulate (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.demodulated = demodulate(handles.modulated);
+plot(handles.axes5,d2a((handles.demodulated),0.001,0.1));
+axis(handles.axes5,[-inf,inf,-1.5,1.5]);
+guidata(hObject,handles);
+
+%plot(handles.axes5,sin(handles.current_data));
+
+% --- Executes on button press in button_random.
+function button_random_Callback(hObject, eventdata, handles)
+% hObject    handle to button_random (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+%plot(handles.axes1,d2a(zero2negone(bitstr(10))));
+handles.randbitstr = (zero2negone(bitstr(20)));
+plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
+axis(handles.axes1,[-inf,inf,-1.5,1.5]);
+guidata(hObject,handles);
+
+
+% --- Executes on button press in button_rand_fig.
+function button_rand_fig_Callback(hObject, eventdata, handles)
+% hObject    handle to button_rand_fig (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+figure(1)
+plot(d2a((handles.randbitstr),0.001,0.1));
+axis([-inf,inf,-1.5,1.5]);
+
+
+% --- Executes on button press in button_mod_fig.
+function button_mod_fig_Callback(hObject, eventdata, handles)
+% hObject    handle to button_mod_fig (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+figure(2)
+plot(handles.modulated);
+% --- Executes on button press in button_demod_fig.
+function button_demod_fig_Callback(hObject, eventdata, handles)
+% hObject    handle to button_demod_fig (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+figure(3)
+plot(d2a((handles.demodulated),0.001,0.1));
+axis([-inf,inf,-1.5,1.5]);
