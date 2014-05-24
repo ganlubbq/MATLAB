@@ -4,7 +4,7 @@ Ts=0.0001;
 c=Tb/Ts;
 
 
-x=bitstr(10);
+x=bitstr(20)
 y=zero2negone(x);
 [a,b]=demux(y);
 
@@ -20,6 +20,11 @@ s=s1+s2;
 figure(4)
 subplot(2,1,1), plot(t,s1,t,z,t,-z), grid on 
 subplot(2,1,2), plot(t,s2,t,x,t,-x), grid on
+%u=s.*cos(2*pi*fc*t).*cos(pi*t/(2*Tb));
 
-figure(5)
-plot(t,s)
+
+
+
+
+%figure(5)
+%plot(t,u)
