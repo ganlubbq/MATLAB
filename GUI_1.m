@@ -22,7 +22,7 @@ function varargout = GUI_1(varargin)
 
 % Edit the above text to modify the response to help GUI_1
 
-% Last Modified by GUIDE v2.5 24-May-2014 15:35:24
+% Last Modified by GUIDE v2.5 30-May-2014 15:57:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -46,20 +46,21 @@ end
 
 % --- Executes just before GUI_1 is made visible.
 function GUI_1_OpeningFcn(hObject, eventdata, handles, varargin)
-hObject =  stem(zero2negone(bitstr(10)))
+%hObject =  stem(zero2negone(bitstr(10)))
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to GUI_1 (see VARARGIN)
 %axes(handles.axes1);
-x1 = [-3*pi : 0.01 : 3*pi];
-handles.awgn = addnoise(x1);
-handles.noawgn = x1;
+%x1 = [-3*pi : 0.01 : 3*pi];
+%handles.awgn = addnoise(x1);
+%handles.noawgn = x1;
 
 handles.randbitstr = 0;
 handles.modulated = 0;
 handles.demodulated = 0;
+
 % Choose default command line output for GUI_1
 handles.output = hObject;
 
@@ -90,6 +91,7 @@ function button_modulate_Callback(hObject, eventdata, handles)
 %plot(y,16);
 handles.modulated = mod_test(handles.randbitstr);
 plot (handles.axes4,handles.modulated);
+grid on;
 guidata(hObject,handles);
 
 
@@ -120,6 +122,7 @@ function button_demodulate_Callback(hObject, eventdata, handles)
 handles.demodulated = demodulate(handles.modulated);
 plot(handles.axes5,d2a((handles.demodulated),0.001,0.1));
 axis(handles.axes5,[-inf,inf,-1.5,1.5]);
+grid on;
 guidata(hObject,handles);
 
 %plot(handles.axes5,sin(handles.current_data));
@@ -133,6 +136,7 @@ function button_random_Callback(hObject, eventdata, handles)
 handles.randbitstr = (zero2negone(bitstr(20)));
 plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
 axis(handles.axes1,[-inf,inf,-1.5,1.5]);
+grid on;
 guidata(hObject,handles);
 
 
@@ -144,6 +148,7 @@ function button_rand_fig_Callback(hObject, eventdata, handles)
 figure(1)
 plot(d2a((handles.randbitstr),0.001,0.1));
 axis([-inf,inf,-1.5,1.5]);
+grid on;
 
 
 % --- Executes on button press in button_mod_fig.
@@ -153,6 +158,7 @@ function button_mod_fig_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 figure(2)
 plot(handles.modulated);
+grid on;
 % --- Executes on button press in button_demod_fig.
 function button_demod_fig_Callback(hObject, eventdata, handles)
 % hObject    handle to button_demod_fig (see GCBO)
@@ -161,3 +167,87 @@ function button_demod_fig_Callback(hObject, eventdata, handles)
 figure(3)
 plot(d2a((handles.demodulated),0.001,0.1));
 axis([-inf,inf,-1.5,1.5]);
+grid on;
+
+
+
+function input_bitstream_Callback(hObject, eventdata, handles)
+% hObject    handle to input_bitstream (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of input_bitstream as text
+%        str2double(get(hObject,'String')) returns contents of input_bitstream as a double
+input_bitstream = get(hObject,'String');
+
+%handles.input_bitstream = get(hObject,'string');
+%guidata(hObject, handles);
+
+% --- Executes during object creation, after setting all properties.
+function input_bitstream_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to input_bitstream (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in button_generate.
+function button_generate_Callback(hObject, eventdata, handles)
+% hObject    handle to button_generate (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+input_bitstream = get(handles.input_bitstream,'String');
+input_string = input_bitstream;
+
+for n=1:length(input_string)
+   input(n)=bin2dec(input_string(n))
+end
+
+handles.randbitstr = (zero2negone(input));
+plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
+axis(handles.axes1,[-inf,inf,-1.5,1.5]);
+grid on;
+guidata(hObject,handles);
+
+
+
+function input_snr_Callback(hObject, eventdata, handles)
+% hObject    handle to input_snr (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+input_snr = get(hObject,'String');
+% Hints: get(hObject,'String') returns contents of input_snr as text
+%        str2double(get(hObject,'String')) returns contents of input_snr as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function input_snr_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to input_snr (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in button_noise.
+function button_noise_Callback(hObject, eventdata, handles)
+% hObject    handle to button_noise (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+input_snr = get(handles.input_snr,'String');
+
+handles.demodulated = demodulate(addnoise(handles.modulated,input_snr));
+plot(handles.axes5,d2a((handles.demodulated),0.001,0.1));
+axis(handles.axes5,[-inf,inf,-1.5,1.5]);
+grid on;
+guidata(hObject,handles);
