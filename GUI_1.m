@@ -54,7 +54,7 @@ hObject =  stem(zero2negone(bitstr(10)))
 % varargin   command line arguments to GUI_1 (see VARARGIN)
 %axes(handles.axes1);
 x1 = [-3*pi : 0.01 : 3*pi];
-handles.awgn = addnoise(x1);
+handles.awgn = addnoise(x1,-9);
 handles.noawgn = x1;
 
 handles.randbitstr = 0;
@@ -100,7 +100,7 @@ function checkbox1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 if (get(hObject,'Value') == get(hObject,'Max'))
 	display('Selected');
-    handles.modulated = addnoise(handles.modulated);
+    handles.modulated = addnoise(handles.modulated,-9);
     
 else
 	display('Not selected');
