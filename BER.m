@@ -10,8 +10,8 @@ N=1000;
 
 x=bitstr(N);
 X=zero2negone(x);
-
-s=mod_test(X);
+[s1,s2]=eye_diag(X)
+s=mod_test(s1,s2);
 nErr=[];
 y=[];
 Eb_N0_dB = [-20:20];
