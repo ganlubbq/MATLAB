@@ -89,30 +89,19 @@ function button_modulate_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 %y = mskmod(x,8,[],pi/2);
 %plot(y,16);
-handles.modulated = mod_test(handles.randbitstr);
+handles.modulated = mod_test(handles.randbitstr)
 plot (handles.axes4,handles.modulated);
 grid on;
 guidata(hObject,handles);
 
-
-% --- Executes on button press in checkbox1.
-function checkbox1_Callback(hObject, eventdata, handles)
-% hObject    handle to checkbox1 (see GCBO)
+% --- Executes on button press in button_mod_fig.
+function button_mod_fig_Callback(hObject, eventdata, handles)
+% hObject    handle to button_mod_fig (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-if (get(hObject,'Value') == get(hObject,'Max'))
-	display('Selected');
-    handles.modulated = addnoise(handles.modulated);
-    
-else
-	display('Not selected');
-    handles.modulated = handles.modulated;
-    
-end
-guidata(hObject,handles)
-
-% Hint: get(hObject,'Value') returns toggle state of checkbox1
-
+figure(2)
+plot(handles.modulated);
+grid on;
 
 % --- Executes on button press in button_demodulate.
 function button_demodulate_Callback(hObject, eventdata, handles)
@@ -125,7 +114,16 @@ axis(handles.axes5,[-inf,inf,-1.5,1.5]);
 grid on;
 guidata(hObject,handles);
 
-%plot(handles.axes5,sin(handles.current_data));
+% --- Executes on button press in button_demod_fig.
+function button_demod_fig_Callback(hObject, eventdata, handles)
+% hObject    handle to button_demod_fig (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+figure(3)
+plot(d2a((handles.demodulated),0.001,0.1));
+axis([-inf,inf,-1.5,1.5]);
+grid on;
+
 
 % --- Executes on button press in button_random.
 function button_random_Callback(hObject, eventdata, handles)
@@ -149,27 +147,6 @@ figure(1)
 plot(d2a((handles.randbitstr),0.001,0.1));
 axis([-inf,inf,-1.5,1.5]);
 grid on;
-
-
-% --- Executes on button press in button_mod_fig.
-function button_mod_fig_Callback(hObject, eventdata, handles)
-% hObject    handle to button_mod_fig (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-figure(2)
-plot(handles.modulated);
-grid on;
-% --- Executes on button press in button_demod_fig.
-function button_demod_fig_Callback(hObject, eventdata, handles)
-% hObject    handle to button_demod_fig (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-figure(3)
-plot(d2a((handles.demodulated),0.001,0.1));
-axis([-inf,inf,-1.5,1.5]);
-grid on;
-
-
 
 function input_bitstream_Callback(hObject, eventdata, handles)
 % hObject    handle to input_bitstream (see GCBO)
@@ -244,10 +221,10 @@ function button_noise_Callback(hObject, eventdata, handles)
 % hObject    handle to button_noise (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-input_snr = get(handles.input_snr,'String');
+input_snr = get(handles.input_snr,'String')
 
-handles.demodulated = demodulate(addnoise(handles.modulated,input_snr));
-plot(handles.axes5,d2a((handles.demodulated),0.001,0.1));
-axis(handles.axes5,[-inf,inf,-1.5,1.5]);
+handles.modulated = addnoise(handles.modulated,input_snr);
+plot(handles.axes4,d2a((handles.modulated),0.001,0.1));
+axis(handles.axes4,[-inf,inf,-1.5,1.5]);
 grid on;
 guidata(hObject,handles);
