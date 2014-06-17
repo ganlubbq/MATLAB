@@ -1,4 +1,4 @@
-function [even,odd]=halfsins(e,o)
+ function [even,odd]=halfsins(e,o)
 
 Tb=0.01;
 Ts=0.0001;
