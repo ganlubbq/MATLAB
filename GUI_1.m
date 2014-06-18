@@ -22,7 +22,7 @@ function varargout = GUI_1(varargin)
 
 % Edit the above text to modify the response to help GUI_1
 
-% Last Modified by GUIDE v2.5 30-May-2014 15:57:23
+% Last Modified by GUIDE v2.5 15-Jun-2014 15:41:57
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -56,7 +56,7 @@ function GUI_1_OpeningFcn(hObject, eventdata, handles, varargin)
 %x1 = [-3*pi : 0.01 : 3*pi];
 %handles.awgn = addnoise(x1);
 %handles.noawgn = x1;
-
+handles.current_data=0;
 handles.randbitstr = 0;
 handles.modulated = 0;
 handles.demodulated = 0;
@@ -89,7 +89,7 @@ function button_modulate_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 %y = mskmod(x,8,[],pi/2);
 %plot(y,16);
-handles.modulated = mod_test(handles.randbitstr)
+handles.modulated = mod_test(handles.randbitstr);
 plot (handles.axes4,handles.modulated);
 grid on;
 guidata(hObject,handles);
@@ -108,7 +108,7 @@ function button_demodulate_Callback(hObject, eventdata, handles)
 % hObject    handle to button_demodulate (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.demodulated = demodulate(handles.modulated);
+handles.demodulated = demodulate(handles.modulated_noise);
 plot(handles.axes5,d2a((handles.demodulated),0.001,0.1));
 axis(handles.axes5,[-inf,inf,-1.5,1.5]);
 grid on;
@@ -132,6 +132,8 @@ function button_random_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 %plot(handles.axes1,d2a(zero2negone(bitstr(10))));
 handles.randbitstr = (zero2negone(bitstr(20)));
+handles.bitstr = d2a((handles.randbitstr),0.001,0.1);
+handles.current_data=handles.bitstr;
 plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
 axis(handles.axes1,[-inf,inf,-1.5,1.5]);
 grid on;
@@ -187,6 +189,8 @@ for n=1:length(input_string)
 end
 
 handles.randbitstr = (zero2negone(input));
+handles.bitstr = d2a((handles.randbitstr),0.001,0.1);
+handles.current_data=handles.bitstr;
 plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
 axis(handles.axes1,[-inf,inf,-1.5,1.5]);
 grid on;
@@ -221,10 +225,53 @@ function button_noise_Callback(hObject, eventdata, handles)
 % hObject    handle to button_noise (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-input_snr = get(handles.input_snr,'String')
+input_snr = str2double(get(handles.input_snr,'String'));
 
-handles.modulated = addnoise(handles.modulated,input_snr);
-plot(handles.axes4,d2a((handles.modulated),0.001,0.1));
-axis(handles.axes4,[-inf,inf,-1.5,1.5]);
+handles.modulated_noise = addnoise(handles.modulated,input_snr)
+plot(handles.axes4,handles.modulated_noise)
+%axis(handles.axes4,[-inf,inf,-1.5,1.5])
 grid on;
 guidata(hObject,handles);
+
+
+% --- Executes on selection change in selectlist.
+function selectlist_Callback(hObject, eventdata, handles)
+% hObject    handle to selectlist (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns selectlist contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from selectlist
+val = get(hObject, 'Value');
+str = get(hObject, 'String');
+
+switch str{val}
+    
+    case 'Bitstream'
+        handles.current_data=handles.bitstr;
+    case 'Eyediagram'
+        handles.current_data=handles.eyediagram;
+    case 'Halfsin'
+        handles.current_data=handles.halfsin;
+end
+guidata(hObject,handles);
+
+% --- Executes during object creation, after setting all properties.
+function selectlist_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to selectlist (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in button_show.
+function button_show_Callback(hObject, eventdata, handles)
+plot(handles.axes1,handles.current_data);
+% hObject    handle to button_show (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
