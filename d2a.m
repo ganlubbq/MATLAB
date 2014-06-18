@@ -1,8 +1,11 @@
 function y=d2a(x,Ts,Tb)
 y=[];
+plus=ones(1,Tb/Ts);
+minus=-1*plus;
 for i=1:length(x)
-    for j=1:2*Tb/Ts;
-        y=[y,x(i)];
-    end
+    if x(i)==1
+        y=[y plus];
+    else
+        y=[y minus];
 end
 end
