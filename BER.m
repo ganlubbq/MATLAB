@@ -12,14 +12,16 @@ x=bitstr(N);
 X=zero2negone(x);
 [s1,s2]=eye_diag(X);
 s=mod_test(s1,s2);
+
 nErr=[];
 y=[];
-Eb_N0_dB = [-20:20];
+Eb_N0_dB = [-30:10];
 R=1/Tb;
-Eb_N0=10.^(Eb_N0_dB/10);
-snr=Eb_N0/1.2;
+Eb_N0=10.^(Eb_N0_dB/20);
+snr=Eb_N0/22;
 SNR=10*log10(snr);
 for i=1:length(Eb_N0_dB)
+    
     y=[];
     y = addnoise(s,SNR(i)); % additive white gaussian noise
     z=[];
@@ -28,7 +30,7 @@ for i=1:length(Eb_N0_dB)
   
 
    % counting the errors
-   nErr(i) = size(find(X(1:N/2)-z'),2);
+   nErr(i) = size(find(x'-z),2);
 end
 
 simBer = nErr/N; % simulated ber
@@ -40,7 +42,7 @@ figure
 semilogy(Eb_N0_dB,theoryBer,'b.-');
 hold on
 semilogy(Eb_N0_dB,simBer,'mx-');
-axis([-20 20 10^-5 0.5])
+axis([-30 10 10^-5 0.5])
 grid on
 legend('theory', 'simulation');
 xlabel('Eb/No, dB');
