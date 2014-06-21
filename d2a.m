@@ -1,4 +1,4 @@
-function y=d2a(x,Ts,Tb)
+function y=d2a(x)
 %c=Tb/Ts;
 global c
 y=zeros(1,length(x)*2*c);
