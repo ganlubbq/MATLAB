@@ -3,7 +3,7 @@ clear all; close all; clc;
 global Tb Ts c
 
 
-Tb=0.02;
+Tb=0.07;
 Ts=0.0001;
 c=Tb/Ts;
 
@@ -19,7 +19,7 @@ y=[];
 Eb_N0_dB = [-30:10];
 R=1/Tb;
 Eb_N0=10.^(Eb_N0_dB/20);
-snr=Eb_N0/22;
+snr=Eb_N0/1.2;
 SNR=10*log10(snr);
 for i=1:length(Eb_N0_dB)
     
