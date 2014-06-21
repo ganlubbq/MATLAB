@@ -1,4 +1,4 @@
-function z=demodulate(x)
+function z=gmsk_demodulate(x)
 
 global Tb Ts c
 
@@ -9,9 +9,9 @@ fc=2/Tb;
 
 t=-Tb:Ts:((length(x)-1-c)*Ts);
 z=zeros(1,length(x)/c-1);
-ec=cos(2*pi*fc*t).*cos(pi*t/(2*Tb));
+ec=cos(2*pi*fc*t);
 even=x.*ec;
-oc=sin(2*pi*fc*t).*sin(pi*t/(2*Tb));
+oc=sin(2*pi*fc*t);
 odd=x.*oc;
 j=1;
 for i=1:2*c:length(even)-2*c

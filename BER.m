@@ -1,8 +1,9 @@
 
 clear all; close all; clc;
+global Tb Ts c
 
 
-Tb=0.01;
+Tb=0.07;
 Ts=0.0001;
 c=Tb/Ts;
 
@@ -10,21 +11,27 @@ N=1000;
 
 x=bitstr(N);
 X=zero2negone(x);
-[s1,s2]=eye_diag(X)
+[s1,s2]=eye_diag(X);
 s=mod_test(s1,s2);
+
 nErr=[];
 y=[];
-Eb_N0_dB = [-20:20];
+Eb_N0_dB = [-30:10];
+R=1/Tb;
+Eb_N0=10.^(Eb_N0_dB/20);
+snr=Eb_N0/1.2;
+SNR=10*log10(snr);
 for i=1:length(Eb_N0_dB)
+    
     y=[];
-    y = addnoise(s,Eb_N0_dB(i)); % additive white gaussian noise
+    y = addnoise(s,SNR(i)); % additive white gaussian noise
     z=[];
    % receiver - hard decision decoding
    z=demodulate(y);
   
 
    % counting the errors
-   nErr(i) = size(find(X-z),2);
+   nErr(i) = size(find([x'-z]),2);
 end
 
 simBer = nErr/N; % simulated ber
@@ -36,7 +43,7 @@ figure
 semilogy(Eb_N0_dB,theoryBer,'b.-');
 hold on
 semilogy(Eb_N0_dB,simBer,'mx-');
-axis([-20 20 10^-5 0.5])
+axis([-30 10 10^-5 0.5])
 grid on
 legend('theory', 'simulation');
 xlabel('Eb/No, dB');
