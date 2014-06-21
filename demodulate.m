@@ -1,8 +1,10 @@
 function z=demodulate(x)
 
-Tb=0.01;
-Ts=0.0001;
-c=Tb/Ts;
+global Tb Ts c
+
+%Tb=0.01;
+%Ts=0.0001;
+%c=Tb/Ts;
 fc=2/Tb;
 
 t=-Tb:Ts:((length(x)-1-c)*Ts);

@@ -1,9 +1,10 @@
 function [s1,s2]=eye_diag(x)
 
-Tb=0.01;
-Ts=0.0001;
-c=Tb/Ts;
+global Tb Ts c
 
+%Tb=0.01;
+%Ts=0.0001;
+%c=Tb/Ts;
 
 %x=bitstr(10);
 %y=zero2negone(x);

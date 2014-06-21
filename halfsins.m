@@ -1,8 +1,10 @@
  function [even,odd]=halfsins(e,o)
+ 
+ global Tb Ts c
 
-Tb=0.01;
-Ts=0.0001;
-c=Tb/Ts;
+%Tb=0.01;
+%Ts=0.0001;
+%c=Tb/Ts;
 m=length(e)/c;
 a=[d2a(e,Ts,Tb),zeros(1,c)];
 b=[zeros(1,c),d2a(o,Ts,Tb)];

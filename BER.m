@@ -1,12 +1,13 @@
 
 clear all; close all; clc;
+global Tb Ts c
 
 
-Tb=0.01;
+Tb=0.02;
 Ts=0.0001;
 c=Tb/Ts;
 
-N=10000;
+N=1000;
 
 x=bitstr(N);
 X=zero2negone(x);
@@ -30,7 +31,7 @@ for i=1:length(Eb_N0_dB)
   
 
    % counting the errors
-   nErr(i) = size(find(x'-z),2);
+   nErr(i) = size(find([x'-z]),2);
 end
 
 simBer = nErr/N; % simulated ber

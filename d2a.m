@@ -1,5 +1,6 @@
 function y=d2a(x,Ts,Tb)
-c=Tb/Ts;
+%c=Tb/Ts;
+global c
 y=zeros(1,length(x)*2*c);
 plus=ones(1,2*c);
 minus=-1*plus;
