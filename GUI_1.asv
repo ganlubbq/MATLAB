@@ -143,15 +143,14 @@ function button_random_Callback(hObject, eventdata, handles)
 % hObject    handle to button_random (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%plot(handles.axes1,d2a(zero2negone(bitstr(10))));
 handles.randbitstr = (zero2negone(bitstr(20)));
-handles.bitstr = d2a((handles.randbitstr),0.001,0.1);
-%handles.current_data=handles.bitstr;
+handles.bitstr = d2a(handles.randbitstr);
 handles.eyediagram = eye_diag(handles.randbitstr);
 handles.eyediagram2 = eye_diag2(handles.randbitstr);
-%handles.halfsins = halfsins(handles.randbitstr);
+[a,b]=demux(handles.randbitstr);
+[handles.even,handles.odd]=halfsins(a,b);
 
-plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
+plot(handles.axes1,d2a((handles.randbitstr));
 axis(handles.axes1,[-inf,inf,-1.5,1.5]);
 grid(handles.axes1);
 guidata(hObject,handles);
@@ -163,9 +162,33 @@ function button_rand_fig_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 figure(1)
-plot(handles.current_data);
-axis([-inf,inf,-1.5,1.5]);
-grid on;
+switch handles.str{handles.val}
+    
+    case 'Bitstream'
+        plot(handles.bitstr);
+        axis([-inf,inf,-1.5,1.5]);
+        grid on;
+    case 'Eyediagram'
+        plot(handles.eyediagram);
+        axis([-inf,inf,-1.5,1.5]);
+        grid on;
+    case 'Eyediagram2'
+        plot(handles.eyediagram2);
+        axis([-inf,inf,-1.5,1.5]);
+        grid on;
+    case 'Halfsinus even'
+        plot(handles.even);
+        axis([-inf,inf,-1.5,1.5]);
+        grid on;
+    case 'Halfsinus odd'
+        plot(handles.odd);
+        axis([-inf,inf,-1.5,1.5]);
+        grid on;
+    otherwise
+        plot(handles.bitstr);
+        axis([-inf,inf,-1.5,1.5]);
+        grid on;
+end
 
 function input_bitstream_Callback(hObject, eventdata, handles)
 % hObject    handle to input_bitstream (see GCBO)
@@ -207,14 +230,13 @@ end
 
 handles.randbitstr = (zero2negone(input));
 handles.bitstr = d2a((handles.randbitstr),0.001,0.1);
-%handles.current_data=handles.bitstr;
 handles.eyediagram = eye_diag(handles.randbitstr);
 handles.eyediagram2 = eye_diag2(handles.randbitstr);
 [a,b]=demux(handles.randbitstr);
 [handles.even,handles.odd]=halfsins(a,b);
 
 
-plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
+plot(handles.axes1,d2a(handles.randbitstr));
 axis(handles.axes1,[-inf,inf,-1.5,1.5]);
 grid(handles.axes1);
 guidata(hObject,handles);
@@ -267,8 +289,10 @@ function selectlist_Callback(hObject, eventdata, handles)
 %        contents{get(hObject,'Value')} returns selected item from
 %        selectlist
 handles.val = 1;
-val = get(hObject, 'Value')
-str = get(hObject, 'String')
+handles.str = 'Bitstream';
+  
+val = get(hObject, 'Value');
+str = get(hObject, 'String');
 handles.str = str;
 handles.val = val;
 
@@ -310,10 +334,16 @@ switch handles.str{handles.val}
         plot(handles.eyediagram2);
         axis([-inf,inf,-1.5,1.5]);
         grid on;
-    case 'Halfsinus '
+    case 'Halfsinus even'
         axes(handles.axes1)
         cla(gca);
         plot(handles.even);
+        axis([-inf,inf,-1.5,1.5]);
+        grid on;
+    case 'Halfsinus odd'
+        axes(handles.axes1)
+        cla(gca);
+        plot(handles.odd);
         axis([-inf,inf,-1.5,1.5]);
         grid on;
 end
