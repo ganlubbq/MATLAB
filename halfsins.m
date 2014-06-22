@@ -1,11 +1,13 @@
-function [even,odd]=halfsins(e,o)
+ function [even,odd]=halfsins(e,o)
+ 
+ global Tb Ts c
 
-Tb=0.01;
-Ts=0.0001;
-c=Tb/Ts;
+%Tb=0.01;
+%Ts=0.0001;
+%c=Tb/Ts;
 m=length(e)/c;
-a=[d2a(e,Ts,Tb),zeros(1,c)];
-b=[zeros(1,c),d2a(o,Ts,Tb)];
+a=[d2a(e),zeros(1,c)];
+b=[zeros(1,c),d2a(o)];
 t=-Tb:Ts:((length(a)-1-c)*Ts);
 %to=-Tb:Ts:((length(b)-1-c)*Ts);
 even=a.*cos(pi*t/(2*Tb)); 
