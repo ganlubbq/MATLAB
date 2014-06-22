@@ -32,7 +32,7 @@ sigma=sqrt(log(2))/2*pi*0.1;
 n=-100:100;
 hg=1/(sqrt(2*pi)*sigma*Tb)*exp(((-n.*Ts).^2)/2*sigma^2*Tb^2);
 w=blackman(length(n));
-hw=0.01*hg.*w';
+hw=0.025*hg.*w';
 %hw = FSPECIAL('gaussian',[1,100],sigma);
 
 
