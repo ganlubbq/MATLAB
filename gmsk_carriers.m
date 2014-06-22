@@ -1,11 +1,10 @@
-function [ec,oc]=gmsk_carriers(E,O)
-
-global Tb Ts c
-
-
-
-t=-Tb:Ts:((length(E)-1-c)*Ts);
+function [Ic,Qc]=gmsk_carriers(I,Q)
+global Ts Tb
 fc=2/Tb;
-ec=E.*cos(2*pi*fc*t);
-oc=O.*sin(2*pi*fc*t);
+t=0:Ts:(length(I))*Ts;
+ec=cos(2*pi*fc*t);
+oc=sin(2*pi*fc*t);
+
+Ic=I.*ec;
+Qc=Q.*oc;
 end
