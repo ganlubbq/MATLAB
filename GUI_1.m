@@ -72,7 +72,9 @@ guidata(hObject, handles);
 
 % UIWAIT makes GUI_1 wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-
+global Ts Tb c
+Tb=0.07;
+Ts=0.0001;
 
 % --- Outputs from this function are returned to the command line.
 function varargout = GUI_1_OutputFcn(hObject, eventdata, handles) 
@@ -118,8 +120,8 @@ handles.demodulated = demodulate(handles.modulated_noise);
 axes(handles.axes5)
 cla(gca);
 hold on;
-plot(d2a((handles.demodulated),0.001,0.1));
-plot(d2a((handles.randbitstr),0.001,0.1),'--r');
+plot(d2a((handles.demodulated)));
+plot(d2a((handles.randbitstr)),'--r');
 axis([-inf,inf,-1.5,1.5]);
 grid on;
 guidata(hObject,handles);
@@ -131,8 +133,8 @@ function button_demod_fig_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 figure(4)
 hold on;
-plot(d2a((handles.demodulated),0.001,0.1));
-plot(d2a((handles.randbitstr),0.001,0.1),'--r');
+plot(d2a((handles.demodulated)));
+plot(d2a((handles.randbitstr)),'--r');
 axis([-inf,inf,-1.5,1.5]);
 grid on;
 hold off;
@@ -144,13 +146,13 @@ function button_random_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.randbitstr = (zero2negone(bitstr(20)));
-handles.bitstr = d2a((handles.randbitstr),0.001,0.1);
+handles.bitstr = d2a((handles.randbitstr));
 handles.eyediagram = eye_diag(handles.randbitstr);
 handles.eyediagram2 = eye_diag2(handles.randbitstr);
 [a,b]=demux(handles.randbitstr);
 [handles.even,handles.odd]=halfsins(a,b);
 
-plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
+plot(handles.axes1,d2a((handles.randbitstr)));
 axis(handles.axes1,[-inf,inf,-1.5,1.5]);
 grid(handles.axes1);
 guidata(hObject,handles);
@@ -229,14 +231,14 @@ for n=1:length(input_string)
 end
 
 handles.randbitstr = (zero2negone(input));
-handles.bitstr = d2a((handles.randbitstr),0.001,0.1);
+handles.bitstr = d2a((handles.randbitstr));
 handles.eyediagram = eye_diag(handles.randbitstr);
 handles.eyediagram2 = eye_diag2(handles.randbitstr);
 [a,b]=demux(handles.randbitstr);
 [handles.even,handles.odd]=halfsins(a,b);
 
 
-plot(handles.axes1,d2a((handles.randbitstr),0.001,0.1));
+plot(handles.axes1,d2a((handles.randbitstr)));
 axis(handles.axes1,[-inf,inf,-1.5,1.5]);
 grid(handles.axes1);
 guidata(hObject,handles);
