@@ -1,4 +1,4 @@
-function s=mod_test(y)
+function s=mod_test(s1,s2)
 
 
 Tb=0.01;
@@ -8,15 +8,7 @@ c=Tb/Ts;
  
 %x=bitstr(10);
 %y=zero2negone(x);
-[a,b]=demux(y);
 
-[z,x]=halfsins(a,b);
-
-
-t=-Tb:Ts:((length(z)-1-c)*Ts);
-fc=2/Tb;
-s1=z.*cos(2*pi*fc*t);
-s2=x.*sin(2*pi*fc*t);
 s=s1+s2;
 
 %figure(4)
