@@ -5,7 +5,7 @@
 %Tb=0.01;
 %Ts=0.0001;
 %c=Tb/Ts;
-m=length(e)/c;
+%m=length(e)/c;
 a=[d2a(e),zeros(1,c)];
 b=[zeros(1,c),d2a(o)];
 t=-Tb:Ts:((length(a)-1-c)*Ts);

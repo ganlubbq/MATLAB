@@ -22,7 +22,7 @@ function varargout = GUI_1(varargin)
 
 % Edit the above text to modify the response to help GUI_1
 
-% Last Modified by GUIDE v2.5 22-Jun-2014 17:13:36
+% Last Modified by GUIDE v2.5 22-Jun-2014 17:22:12
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -57,7 +57,12 @@ function GUI_1_OpeningFcn(hObject, eventdata, handles, varargin)
 %handles.awgn = addnoise(x1);
 %handles.noawgn = x1;
 
+global Tb Ts c
 
+Tb=0.07;
+Ts=0.0001;
+c=Tb/Ts;
+ 
 handles.current_data=0;
 handles.randbitstr = 0;
 handles.modulated = 0;
@@ -92,7 +97,7 @@ function button_modulate_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 %y = mskmod(x,8,[],pi/2);
 %plot(y,16);
-handles.modulated = mod_test(handles.randbitstr);
+handles.modulated = mod_test(handles.eyediagram,handles.eyediagram2);
 plot (handles.axes4,handles.modulated);
 axis(handles.axes4,[-inf,inf,-1.5,1.5]);
 grid(handles.axes4);
@@ -243,6 +248,8 @@ guidata(hObject,handles);
 
 
 
+
+
 function input_snr_Callback(hObject, eventdata, handles)
 % hObject    handle to input_snr (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -288,8 +295,7 @@ function selectlist_Callback(hObject, eventdata, handles)
 % Hints: contents = get(hObject,'String') returns selectlist contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from
 %        selectlist
-handles.val = 1;
-handles.str = 'Bitstream';
+
   
 val = get(hObject, 'Value');
 str = get(hObject, 'String');
@@ -346,6 +352,10 @@ switch handles.str{handles.val}
         plot(handles.odd);
         axis([-inf,inf,-1.5,1.5]);
         grid on;
+    otherwise
+        plot(handles.bitstr);
+        axis([-inf,inf,-1.5,1.5]);
+        grid on;
 end
 
 catch
@@ -373,3 +383,39 @@ function ber_fig_button_Callback(hObject, eventdata, handles)
 % hObject    handle to ber_fig_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+n_input = str2double(get(handles.n_input,'String'));
+handles.simber = BER(handles.n_input);
+handles.Eb_N0_dB = [-30:10]; 
+handles.theoryBer = 0.5*erfc(sqrt(10.^(handles.Eb_N0_dB/10))); % theoretical ber
+ 
+figure (6)
+semilogy(handles.Eb_N0_dB,handles.theoryBer,'b.-');
+hold on
+semilogy(handles.Eb_N0_dB,handles.simber,'mx-');
+axis([-30 10 10^-5 0.5])
+grid on
+legend('theory', 'simulation');
+xlabel('Eb/No, dB');
+ylabel('Bit Error Rate');
+
+
+function n_input_Callback(hObject, eventdata, handles)
+% hObject    handle to n_input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+n_input = get(hObject,'String');
+% Hints: get(hObject,'String') returns contents of n_input as text
+%        str2double(get(hObject,'String')) returns contents of n_input as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function n_input_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to n_input (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
