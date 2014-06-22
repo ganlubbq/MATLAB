@@ -1,5 +1,5 @@
 
-clear all; close all; clc;
+function simBer=BER(N)
 global Tb Ts c
 
 
@@ -7,7 +7,7 @@ Tb=0.07;
 Ts=0.0001;
 c=Tb/Ts;
 
-N=1000;
+
 
 x=bitstr(N);
 X=zero2negone(x);
