@@ -11,3 +11,5 @@ for i=1:length(x)
     else
        xt((i-1)*c+1:i*c)=minus;
     end
+end
+end
