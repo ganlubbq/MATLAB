@@ -62,6 +62,8 @@ global Tb Ts c
 Tb=0.07;
 Ts=0.0001;
 c=Tb/Ts;
+
+Eb_N0_dB = [-30:10];
  
 handles.current_data=0;
 handles.randbitstr = 0;
