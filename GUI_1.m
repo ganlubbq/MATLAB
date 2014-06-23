@@ -385,7 +385,7 @@ function ber_fig_button_Callback(hObject, eventdata, handles)
 % hObject    handle to ber_fig_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-n_input = str2double(get(handles.n_input,'String'));
+handles.n_input = str2double(get(handles.n_input,'String'));
 handles.simber = BER(handles.n_input);
 handles.Eb_N0_dB = [-30:10]; 
 handles.theoryBer = 0.5*erfc(sqrt(10.^(handles.Eb_N0_dB/10))); % theoretical ber
