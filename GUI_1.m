@@ -63,7 +63,7 @@ Tb=0.07;
 Ts=0.0001;
 c=Tb/Ts;
 
-Eb_N0_dB = [-30:10];
+
  
 handles.current_data=0;
 handles.randbitstr = 0;
@@ -152,8 +152,8 @@ function button_random_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 handles.randbitstr = (zero2negone(bitstr(20)));
 handles.bitstr = d2a(handles.randbitstr);
-handles.eyediagram = eye_diag(handles.randbitstr);
-handles.eyediagram2 = eye_diag2(handles.randbitstr);
+[handles.eyediagram,handles.eyediagram2] = eye_diag(handles.randbitstr);
+%handles.eyediagram2 = eye_diag2(handles.randbitstr);
 [a,b]=demux(handles.randbitstr);
 [handles.even,handles.odd]=halfsins(a,b);
 
@@ -237,8 +237,8 @@ end
 
 handles.randbitstr = (zero2negone(input));
 handles.bitstr = d2a(handles.randbitstr);
-handles.eyediagram = eye_diag(handles.randbitstr);
-handles.eyediagram2 = eye_diag2(handles.randbitstr);
+[handles.eyediagram,handles.eyediagram2] = eye_diag(handles.randbitstr);
+%handles.eyediagram2 = eye_diag2(handles.randbitstr);
 [a,b]=demux(handles.randbitstr);
 [handles.even,handles.odd]=halfsins(a,b);
 
