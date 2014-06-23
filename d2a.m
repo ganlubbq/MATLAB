@@ -1,5 +1,5 @@
 function y=d2a(x)
-%c=Tb/Ts;
+%Makes a vector containing Tb/Ts samples per bit
 global c
 y=zeros(1,length(x)*2*c);
 plus=ones(1,2*c);

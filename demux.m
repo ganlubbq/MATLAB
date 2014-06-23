@@ -1,5 +1,5 @@
 function  [even,odd]=demux(x)
-
+% split stream into even and odd bits
 
 %{
 for i=1:2:length(x)

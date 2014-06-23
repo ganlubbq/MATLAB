@@ -1,5 +1,6 @@
 function xt=gmsk_pulseshaping(x)
 global Tb Ts c
+% creates a vector with c samples per bit 
 xt=zeros(1,length(x)*c);
 plus=ones(1,c);
 minus=-1*plus;

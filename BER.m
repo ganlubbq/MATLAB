@@ -8,7 +8,7 @@ Ts=0.0001;
 c=Tb/Ts;
 
 
-
+%Create a modulated signal transmitting N bits
 x=bitstr(N);
 X=zero2negone(x);
 [s1,s2]=eye_diag(X);
@@ -18,6 +18,7 @@ nErr=[];
 y=[];
 Eb_N0_dB = [-30:10];
 R=1/Tb;
+%Convert Eb/N0 to SNR
 Eb_N0=10.^(Eb_N0_dB/20);
 snr=Eb_N0/1.2;
 SNR=10*log10(snr);
@@ -26,7 +27,7 @@ for i=1:length(Eb_N0_dB)
     y=[];
     y = addnoise(s,SNR(i)); % additive white gaussian noise
     z=[];
-   % receiver - hard decision decoding
+   % receiver
    z=demodulate(y);
   
 
