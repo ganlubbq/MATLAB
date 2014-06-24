@@ -10,7 +10,7 @@ c=Tb/Ts;
 fc=2/Tb;
 
 sigma=sqrt(log(2))/2*pi*0.3; %BT set to 0.5 which is used in real systems
-n=-10:10; % filter length
+n=-16:16; % filter length
 hg=1/(sqrt(2*pi)*sigma*Tb)*exp(((-n.*Ts).^2)/2*sigma^2*Tb^2); % filter response
 w=blackman(length(n));
 hw=hg.*w'; % multiplying by window
