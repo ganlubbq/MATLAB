@@ -1,6 +1,6 @@
-function x=qpsk_du(I,Q)
+function z=qpsk_du(I,Q)
 % final step of qpsk demodulation
-
+global c Ts Tb
 j=1;
 % integrate over a period of Tb and compare to 0
 for i=1:c:length(I)-c

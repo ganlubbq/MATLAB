@@ -3,13 +3,14 @@ function [I,Q]=gmsk_quad_rx(s)
 global Ts Tb
 fc=2/Tb;
 
+t=Ts:Ts:length(s)*Ts;
 % multiplying by carriers
-s1=s.*ec;
-s2=s.*oc;
+I=s.*cos(2*pi*fc*t);
+Q=s.*sin(2*pi*fc*t);
 
 
 [b,a]=butter(2,0.5*pi*fc*Ts); % butterworth low pass filter
 
 % Filter out the signals
-Irx=filtfilt(b,a,s1);
-Qrx=filtfilt(b,a,s2);
+Irx=filtfilt(b,a,I);
+Qrx=filtfilt(b,a,Q);
