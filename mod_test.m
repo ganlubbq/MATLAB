@@ -1,13 +1,12 @@
 function s=mod_test(s1,s2)
-
+% adds the even and odd parts to get the final msk modulted signal
 
 Tb=0.01;
 Ts=0.0001;
 c=Tb/Ts;
  
  
-%x=bitstr(10);
-%y=zero2negone(x);
+
 
 s=s1+s2;
 

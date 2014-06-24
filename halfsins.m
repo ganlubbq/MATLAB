@@ -1,15 +1,14 @@
  function [even,odd]=halfsins(e,o)
+ % Create the halfsinusoids for the even and odd bitstreams
  
  global Tb Ts c
 
-%Tb=0.01;
-%Ts=0.0001;
-%c=Tb/Ts;
-%m=length(e)/c;
-a=[d2a(e),zeros(1,c)];
-b=[zeros(1,c),d2a(o)];
+
+a=[d2a(e),zeros(1,c)]; % adding zeros to match length
+b=[zeros(1,c),d2a(o)]; % odd stream is delayed by Tb
 t=-Tb:Ts:((length(a)-1-c)*Ts);
-%to=-Tb:Ts:((length(b)-1-c)*Ts);
+
+
 even=a.*cos(pi*t/(2*Tb)); 
 odd=b.*sin(pi*t/(2*Tb));
 %figure (1)

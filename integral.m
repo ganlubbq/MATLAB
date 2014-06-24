@@ -1,5 +1,6 @@
 function y=integral(x)
-%y=0;
+% numerical integration using the trapezoid method for a normalized
+% distance of 1 between samples
 
 %z=[x(1) x(2:length(x))+x(1:length(x)-1) x(length(x))];
 a=x(2:end);

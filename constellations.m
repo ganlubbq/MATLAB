@@ -6,30 +6,26 @@ Tb=0.07;
 Ts=0.0001;
 c=Tb/Ts;
 
-N=1000;
+N=100;
 
 x=bitstr(N);
 X=zero2negone(x);
-[mI,mO]=eye_diag(X);
+[e,o]=demux(X);
+[mI,mO]=halfsins(e,o);
 
 Tb=0.07;
 Ts=0.001;
 
+xt=gmsk_pulseshaping(x);
+xint=gmsk_integrate(xt);
+xf=gmsk_filter(xint);
+[gI,gO]=gmsk_quad(xf);
+t=-Tb:Ts:((length(mI)-1-c)*Ts);
 
-[E,O]=gmsk_filter(x);
-t=-Tb:Ts:((length(E)-1-c)*Ts);
 
-ec=E.*cos(pi*t/(2*Tb)); 
-oc=O.*sin(pi*t/(2*Tb));
-[gI,gO]=gmsk_carriers(ec,oc);
-g=gI+gO;
-G=fft(g);
-M=fft(mI+mO);
+
 
 figure(1)
 plot(mI,mO,'bo',gI,gO,'rx-')
-figure(2)
-subplot(2,1,1)
-plot(abs(G(1000:3000)))
-subplot(2,1,2)
-plot(abs(M(1000:3000)))
+legend ('MSK', 'GMSK')
+title('Constellation diagrams')

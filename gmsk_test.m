@@ -33,10 +33,10 @@ ec=cos(2*pi*fc*t);%.*cos(pi*t/(2*Tb));
 oc=sin(2*pi*fc*t);%.*sin(pi*t/(2*Tb));
 
 sigma=sqrt(log(2))/2*pi*0.5;
-n=-80:80;
+n=-100:100;
 hg=1/(sqrt(2*pi)*sigma*Tb)*exp(((-n.*Ts).^2)/2*sigma^2*Tb^2);
 w=blackman(length(n));
-hw=0.075*hg.*w';
+hw=0.75*hg.*w';
 %hw = FSPECIAL('gaussian',[1,100],sigma);
 
 %integration
